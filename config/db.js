@@ -7,6 +7,7 @@ const CONNECTION_URL = process.env.mongo_url;
 mongoose.connect(CONNECTION_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    
 });
 
 mongoose.Promise = global.Promise;

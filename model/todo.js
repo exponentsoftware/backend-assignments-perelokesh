@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const todoList = new mongoose.Schema({
+const TODO = mongoose.model(
+    "TODO",new mongoose.Schema({
     username: {
         type: String,
         required: true
@@ -9,10 +10,17 @@ const todoList = new mongoose.Schema({
          type: String,
          required:true 
         },
+    status:{
+        type: String,
+        required: true,
+        enum: ["active", "completed","in-progress","deleted"]
+    },   
      category: {
          type: String,
          enum: ["work","hobby","task"],
          default: "work"
-     }   
-});
-module.exports.mongoose.model("Todo",todoList);
+     },
+
+}, {timestamps:true})
+);
+module.exports= TODO;
