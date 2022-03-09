@@ -8,6 +8,7 @@ const {
     getAllTodos,
     updateTodo,
     deleteTodo,
+    filter,
 } = require('../controller/todoController');
 
 // to create a Todo
@@ -29,6 +30,9 @@ router.put("/:id/update", updateTodo);
 
 // to delete the todo
 router.delete("/:id/delete", deleteTodo);
+
+// //filterPath
+// router.get("/filter", filter);
 
 module.exports = router;
 
