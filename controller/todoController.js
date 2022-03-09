@@ -3,7 +3,6 @@
 const Todo = require("../model/todo");
 
 exports.createTodo = async (req, res) => {
-    console.log("TEst");
 
     const todo = new Todo({
         username: req.body.username,
@@ -40,7 +39,7 @@ exports.createTodo = async (req, res) => {
 };
 
 exports.getTodoById = (req, res, next, todoId) => {
-    TODO.findById(req.params.todoId).exec((err, todo) => {
+   Todo.findById(req.params.todoId).exec((err, todo) => {
         if (err || !todo) { 
             return res.status(400).json({
                 error: "404 todo not found",
