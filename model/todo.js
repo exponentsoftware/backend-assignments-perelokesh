@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
 
-const TODO = mongoose.model(
-    "TODO",new mongoose.Schema({
+const Todo = new mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        maxLength:30,
     },
     title: {
          type: String,
-         required:true 
+         required:true,
+         trim: true,
+        maxLength:30,
         },
     status:{
         type: String,
@@ -22,5 +25,5 @@ const TODO = mongoose.model(
      },
 
 }, {timestamps:true})
-);
-module.exports= TODO;
+
+module.exports= mongoose.model("Todo", Todo);
