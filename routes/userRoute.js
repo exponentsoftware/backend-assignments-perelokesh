@@ -3,6 +3,7 @@ const express = require('express');
 const router= express.Router();
 const userController =require('../controller/userController');
 
+const auth = require('../middleware/auth');
 
 //user signup
 router.post("/user/signup", userController.createUser);
@@ -11,6 +12,6 @@ router.post("/user/signup", userController.createUser);
 router.post("/user/login", userController.login);
 
 // //user delete
-// router.delete("/user/:userId", checkAuth, userController.deleteUser);
+ router.delete("/user/:userId", auth, userController.deleteUser);
 
 module.exports = router;
