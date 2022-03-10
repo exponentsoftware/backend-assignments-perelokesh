@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const validator = require('validator');
-const User = mongoose.Schema({
+const userSchema = mongoose.Schema({
     username: {
         type: String,
         required: true,
         trim: true,
         maxLength:30,
+    },
+    password: {
+        type: String,
     },
     email: {
         type: String,
@@ -45,4 +49,4 @@ const User = mongoose.Schema({
 
 },{timestamps:true}
 );
-module.exports = mongoose.model('User',User);
+module.exports = mongoose.model('User',userSchema);
