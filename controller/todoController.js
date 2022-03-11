@@ -49,22 +49,25 @@ exports.getTodoById = (req, res, next, todoId) => {
         next();
     });
 };
-exports.getAllTodos = (req, res) => {
-    // simply use .find() method and it will return all the todos
-    Todo.find()
-      .sort("-createdAt")
-      .exec((err, todos) => {
-        // error checking
-        if (err || !todos) {
-          return res.status(400).json({
-            error: "Something went wrong in finding all todos",
-          });
-        }
-        // return all the todos in json format
-        res.json(todos);
-      });
+
+exports.getAllTodos = async (req, res) => {
+  // pagination
+  const pageOptions = {
+    page: parseInt(req.query.page, 10) || 0, 
+    limit : parseInt(req.query.limit, 10) 10,
   };
-  
+  try {
+    const todos = await Todo.find()
+                   .skip(pageOptions.page * pageOptions.limit)
+                   .limit(pageOptions.limit)
+                   .exec()
+                   .then();
+                   res.status(200).json(err);
+
+  } catch (err){
+    res.status(500).json(err);
+  }
+}
 exports.getTodo = (req, res) =>{
     return res.json(req.todo);
 };  
@@ -107,4 +110,21 @@ exports.updateTodo = (req, res) => {
     });
   };
   
+  
+// exports.getAllTodos = async (req, res) => {
+//   // simply use .find() method and it will return all the todos
+//   Todo.find()
+//     .sort("-createdAt")
+//     .exec((err, todos) => {
+//       // error checking
+//       if (err || !todos) {
+//         return res.status(400).json({
+//           error: "Something went wrong in finding all todos",
+//         });
+//       }
+//       // return all the todos in json format
+//       res.json(todos);
+//     });
+// };
+
 
