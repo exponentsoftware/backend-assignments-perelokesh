@@ -1,5 +1,6 @@
 // const db = require('../model');
 // const Todo =db.todo;
+const todo = require("../model/todo");
 const Todo = require("../model/todo");
 
 exports.createTodo = async (req, res) => {
@@ -91,24 +92,38 @@ exports.updateTodo = (req, res) => {
       res.json(t);
     });
   };
-  exports.deleteTodo = (req, res) => {
-    // take req.todo from getTodoById() middleware and
-    // fetch the todo that user wants to delete
-    const todo = req.todo;
-    // call .remove() method to delete it
-    todo.remove((err, task) => {
-      if (err || !task) {
-        return res.status(400).json({
-          error: "something went wrong while deleting the todo",
-        });
-      }
-      // send deleted todo and success message as a json response
-      res.json({
-        task_deleted: task,
-        message: "Todo deleted successfully!",
-      });
-    });
+
+
+
+  exports.deleteTodo =(req, res)=> {
+     Todo.findByIdAndDelete(req.params.id)
+     .then(()=> {
+       var response = { message : "Todo deleted successfully", 
+       status: true};
+       return res.json(response);
+       // here return is per postman 
+     });
   };
+
+
+  // exports.deleteTodo = (req, res) => {
+  //   // take req.todo from getTodoById() middleware and
+  //   // fetch the todo that user wants to delete
+  //   const todo = req.todo;
+  //   // call .remove() method to delete it
+  //   todo.remove((err, task) => {
+  //     if (err || !task) {
+  //       return res.status(400).json({
+  //         error: "something went wrong while deleting the todo",
+  //       });
+  //     }
+  //     // send deleted todo and success message as a json response
+  //     res.json({
+  //       task_deleted: task,
+  //       message: "Todo deleted successfully!",
+  //     });
+  //   });
+  // };
   
   
 // exports.getAllTodos = async (req, res) => {
