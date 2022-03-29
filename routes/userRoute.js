@@ -10,7 +10,8 @@ router.post("/user/signup", userController.createUser);
 
 //user login
 router.post("/user/login", userController.login);
-
+//user update
+router.put("/user/update",userController.updateUser);
 // //user delete
  router.delete("/user/:userId", auth, userController.deleteUser);
 

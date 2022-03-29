@@ -2,50 +2,44 @@ const User = require('../model/userModel');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const createUser = async (req, res, next) => {
-  User.find({ emailId: req.body.emailId })
-    .exec()
-    .then((user) => {
-      if (user.length >= 1) {
-        console.log(user);
-        return res.status(409).json({
-          message: "Mail Exists",
-        });
-      } else {
-        bcrypt.hash(req.body.password, 10, (err, hash) => {
-          if (err) {
-            return res.status(500).json({
-              error: err,
-            });
-          } else {
-            const user = new User({
-              emailId: req.body.emailId,
-              password: hash,
-              phoneNumber: req.body.phoneNumber,
-              userName: req.body.userName,
-            });
+const createUser = async (req, res) => {
+ const newUser = new User({
+   username: req.body.username,
+   password: req.body.password,
+   email: req.body.email,
+   phone: req.body.phone,
+   role: "user"
 
-            user
-              .save()
-              .then((result) => {
-                console.log(result);
-                return res.status(201).json({
-                  message: "User Created",
-                  UserDetails: result,
-                });
-              })
-              .catch((error) => {
-                res.json({
-                  message: "An error occurred",
-                  error: error,
-                });
-              });
-          }
-        });
-      }
-    });
+ });
+ newUser.save((error,data)=> {
+   if(error) {
+     res.status(200).send({message: "new user creation failed.", error: error});
+
+   }else{
+     res.status(200).send({message: "user created successfully"});
+   }
+ })
 };
+const updateUser = (req, res) => {
+  const UserID = req.params.UserID;
+  User.updateOne( UserID ? {_id : req.params.UserID} : {_id : req.body.UserID},
+      {
+          username: req.body.username,
+          phone: req.body.phone,
+          email: req.body.email,
+          role: req.body.role
+      }
+       ,function (err, data){
+     if(err){
+      res.status(200).send({message : "something went wrong. error: ", error: err});
+     }
+     else{
+      res.status(200).send(data);
+     }
+    
 
+  })
+}
 const deleteUser = (req, res, next) => {
   User.deleteOne({ _id: req.params.id })
     .exec()
@@ -119,6 +113,6 @@ const login = (req, res, next) => {
     });
 };
 
-module.exports = { createUser, login, deleteUser };
+module.exports = { createUser, login, updateUser, deleteUser };
 
 
