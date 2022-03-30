@@ -4,7 +4,8 @@ const router = express.Router();
 const {
     createTodo,
     getTodoById,
-    getTodo,
+    //getTodo,
+    getOneTodo,
     getAllTodos,
     updateTodo,
     deleteTodo,
@@ -19,10 +20,10 @@ router.post("/todo/create",createTodo);
 router.get("/:id", getTodoById);
 
 // to get all the tasks
-router.get("/todos",getAllTodos);
+router.get("/getAll",getAllTodos);
+router.get('/:id',getOneTodo);
 
-// to get a single todo 
-// router.get("/:id", getTodo);
+
 
 
 // to update the todo
@@ -30,9 +31,6 @@ router.put("/:id/update", updateTodo);
 
 // to delete the todo
 router.delete("/:id/delete", deleteTodo);
-
-// //filterPath
-// router.get("/filter", filter);
 
 module.exports = router;
 

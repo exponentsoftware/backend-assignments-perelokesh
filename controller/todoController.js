@@ -1,10 +1,8 @@
-// const db = require('../model');
-// const Todo =db.todo;
-const todo = require("../model/todo");
+
 const Todo = require("../model/todo");
 
 exports.createTodo = async (req, res) => {
-
+    console.log('Test');
     const todo = new Todo({
         username: req.body.username,
         title: req.body.title,
@@ -52,9 +50,9 @@ exports.getAllTodos = async (req, res) => {
     res.status(500).json(err);
   }
 }
-exports.getTodo = (req, res) =>{
-    return res.json(req.todo);
-};  
+// exports.getTodo = (req, res) =>{
+//     return res.json(req.todo);
+// };  
 
 exports.updateTodo = (req, res) => {
     
@@ -70,7 +68,15 @@ exports.updateTodo = (req, res) => {
       res.json(t);
     });
   };
-
+//GET one TODO
+module.exports.getOneTodo = async (req, res) => {
+  try {
+    const todo = await Todo.findById(req.params.id);
+    res.status(200).json(todo);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
 
   exports.deleteTodo =(req, res)=> {
