@@ -2,29 +2,22 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    createTodo,
-    getTodoById,
-    //getTodo,
+    addTodo,
     getOneTodo,
-    getAllTodos,
+    getAllTodo,
     updateTodo,
-    deleteTodo,
-    filter,
+    deleteTodo
+    
 } = require('../controller/todoController');
 
-// to create a Todo
-router.post("/todo/create",createTodo);
- 
-// params
-// it will fetch the value from the url 
-router.get("/:id", getTodoById);
+// to add a Todo
+router.post("/todo/add",addTodo);
 
 // to get all the tasks
-router.get("/getAll",getAllTodos);
-router.get('/:id',getOneTodo);
+router.get("/getall",getAllTodo);
 
-
-
+//get by id
+router.get("/:id",getOneTodo);
 
 // to update the todo
 router.put("/:id/update", updateTodo);
@@ -33,4 +26,3 @@ router.put("/:id/update", updateTodo);
 router.delete("/:id/delete", deleteTodo);
 
 module.exports = router;
-

@@ -1,7 +1,7 @@
 
 const Todo = require("../model/todo");
 
-exports.createTodo = async (req, res) => {
+exports.addTodo = async (req, res) => {
     console.log('Test');
     const todo = new Todo({
         username: req.body.username,
@@ -19,20 +19,7 @@ exports.createTodo = async (req, res) => {
       }
 
 };
-
-exports.getTodoById = (req, res, next, todoId) => {
-   Todo.findById(req.params.todoId).exec((err, todo) => {
-        if (err || !todo) { 
-            return res.status(400).json({
-                error: "404 todo not found",
-            });
-        }
-        req.todo = todo;
-        next();
-    });
-};
-
-exports.getAllTodos = async (req, res) => {
+exports.getAllTodo = async (req, res) => {
   // pagination
   const pageOptions = {
     page: parseInt(req.query.page, 10) || 0, 
@@ -44,30 +31,39 @@ exports.getAllTodos = async (req, res) => {
                    .limit(pageOptions.limit)
                    .exec()
                    .then();
-                   res.status(200).json(err);
+                   res.status(200).json(todos);
 
   } catch (err){
     res.status(500).json(err);
   }
 }
-// exports.getTodo = (req, res) =>{
-//     return res.json(req.todo);
-// };  
 
-exports.updateTodo = (req, res) => {
-    
-    const todo = req.todo;
-    
-    todo.task = req.body.task;
-      todo.save((err, t) => {
-      if (err || !t) {
-        return res.status(400).json({
-          error: "something went wrong while updating",
-        });
-      }
-      res.json(t);
+//UPDATE todo
+
+module.exports.updateTodo = async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  await Todo.updateOne(
+    { _id: id },
+    {
+      $set: req.body,
+    }
+  )
+    .exec()
+    .then((result) => {
+      res.status(200).json({
+        message: `Updated todo details successfully `,
+        result,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({
+        error: err,
+      });
     });
-  };
+};
+
 //GET one TODO
 module.exports.getOneTodo = async (req, res) => {
   try {
@@ -79,15 +75,21 @@ module.exports.getOneTodo = async (req, res) => {
 };
 
 
-  exports.deleteTodo =(req, res)=> {
-     Todo.findByIdAndDelete(req.params.id)
-     .then(()=> {
-       var response = { message : "Todo deleted successfully", 
-       status: true};
-       return res.json(response);
-       // here return is per postman 
-     });
-  };
+//DELETE todo
+module.exports.deleteTodo = async (req, res) => {
+  try {
+    const todo = await Todo.findById(req.params.id);
+
+    try {
+      await todo.delete();
+      res.status(200).json("todo has been deleted...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
 
  
