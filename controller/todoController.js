@@ -7,6 +7,8 @@ exports.addTodo = async (req, res) => {
         username: req.body.username,
         title: req.body.title,
         status: req.body.status,
+        created_at: req.body.created_at,
+        updated_at: req.body.updated_at,
         category: req.body.category,
     });
     

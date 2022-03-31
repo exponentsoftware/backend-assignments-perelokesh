@@ -7,7 +7,9 @@ const TodoSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ["active", "completed","in-progress","deleted"]
-    },   
+    },
+    created_at: { type: Date, required: false },
+    updated_at: { type: Date, required: false },
      category: {
          type: String,
          enum: ["work","hobby","task"],
