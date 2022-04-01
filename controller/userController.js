@@ -8,6 +8,8 @@ const createUser = async (req, res) => {
    password: req.body.password,
    email: req.body.email,
    phone: req.body.phone,
+   created_at: req.body.created_at,
+   updated_at: req.body.updated_at,
    role: "user"
 
  });
