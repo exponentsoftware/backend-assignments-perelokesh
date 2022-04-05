@@ -12,7 +12,7 @@ const {
 
 // to add a Todo
 router.post("/todo/add",addTodo);
-
+1
 // to get all the tasks
 router.get("/getall",getAllTodo);
 
