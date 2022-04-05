@@ -13,10 +13,10 @@ const Comments = sequelize.define('comments',
     updated_at:{ 
         type: Sequelize.DATE
     },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
+    // userId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "User",
+    //   },
     
 }
 );
