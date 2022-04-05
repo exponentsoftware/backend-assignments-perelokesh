@@ -12,7 +12,7 @@ const Tags = sequelize.define('tags',
     
     category:{
         type: Sequelize.STRING,
-        // enum: ["active", "completed","in-progress","deleted"]
+        enum: ["active", "completed","in-progress","deleted"]
     }  
     
 }
